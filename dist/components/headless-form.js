@@ -316,8 +316,12 @@ let HeadlessFormComponent = setComponentTemplate(precompileTemplate(`
     this.submissionState = undefined;
   }
   registerField(name, field) {
-    assert(`You passed @name="${String(name)}" to the form field, but this is already in use. Names of form fields must be unique!`, !this.fields.has(name));
-    this.fields.set(name, new FieldData(field));
+    // assert(`You passed @name="${String(name)}" to the form field, but this is already in use. Names of form fields must be unique!`, !this.fields.has(name));
+    if (!this.fields.has(name)) {
+      this.fields.set(name, new FieldData(field));
+    } else {
+      console.warn(`You passed @name="${String(name)}" to the form field, but this is already in use. Names of form fields must be unique!`);
+    }
   }
   unregisterField(name) {
     this.fields.delete(name);
